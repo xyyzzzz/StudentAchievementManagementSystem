@@ -1,94 +1,93 @@
 package com.wenr.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import com.wenr.dao.CourseDao;
+import com.wenr.dao.StudentDao;
+import com.wenr.model.Course;
+import com.wenr.model.Student;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.wenr.dao.CourseDao;
-import com.wenr.model.Course;
-import com.wenr.dao.StudentDao;
-import com.wenr.model.Student;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class StudentServlet extends HttpServlet {
 
 	/**
-		 * Constructor of the object.
-		 */
+	 * Constructor of the object.
+	 */
 	public StudentServlet() {
 		super();
 	}
 
 	/**
-		 * Destruction of the servlet. <br>
-		 */
+	 * Destruction of the servlet. <br>
+	 */
 	public void destroy() {
 		super.destroy(); // Just puts "destroy" string in log
 		// Put your code here
 	}
 
 	/**
-		 * The doGet method of the servlet. <br>
-		 *
-		 * This method is called when a form has its tag value method equals to get.
-		 * 
-		 * @param request the request send by the client to the server
-		 * @param response the response send by the server to the client
-		 * @throws ServletException if an error occurred
-		 * @throws IOException if an error occurred
-		 */
+	 * The doGet method of the servlet. <br>
+	 *
+	 * This method is called when a form has its tag value method equals to get.
+	 *
+	 * @param request the request send by the client to the server
+	 * @param response the response send by the server to the client
+	 * @throws ServletException if an error occurred
+	 * @throws IOException if an error occurred
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
-		 * The doPost method of the servlet. <br>
-		 *
-		 * This method is called when a form has its tag value method equals to post.
-		 * 
-		 * @param request the request send by the client to the server
-		 * @param response the response send by the server to the client
-		 * @throws ServletException if an error occurred
-		 * @throws IOException if an error occurred
-		 */
+	 * The doPost method of the servlet. <br>
+	 *
+	 * This method is called when a form has its tag value method equals to post.
+	 *
+	 * @param request the request send by the client to the server
+	 * @param response the response send by the server to the client
+	 * @throws ServletException if an error occurred
+	 * @throws IOException if an error occurred
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// Ç×²âÕâ¸ö¶«Î÷ÒªĞ´ÔÚÇ°Ãæ   ·ñÔò²»¹ÜÓÃ£¡£¡= =   ÖĞÎÄÂÒÂëÊµÔÚÌ«¶ñĞÄÁË¡­¡­
+
+		// äº²æµ‹è¿™ä¸ªä¸œè¥¿è¦å†™åœ¨å‰é¢   å¦åˆ™ä¸ç®¡ç”¨ï¼ï¼= =   ä¸­æ–‡ä¹±ç å®åœ¨å¤ªæ¶å¿ƒäº†â€¦â€¦
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		
+
 		String action = request.getParameter("action");
-		String path = request.getContextPath();		
+		String path = request.getContextPath();
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
-		
-		
+
+
 		if ("delete".equals(action)) {
-			// É¾³ıÑ§ÉúµÄÄ³Ò»ÃÅ¿Î³Ì  Èç¹û³ö³É¼¨Ôò²»¿ÉÒÔÉ¾³ı  ·ñÔò¿ÉÒÔÉ¾³ı
+			// åˆ é™¤å­¦ç”Ÿçš„æŸä¸€é—¨è¯¾ç¨‹  å¦‚æœå‡ºæˆç»©åˆ™ä¸å¯ä»¥åˆ é™¤  å¦åˆ™å¯ä»¥åˆ é™¤
 			out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
 			out.println("<HTML>");
-			out.println("  <HEAD><TITLE>Ñ§ÉúµÇÂ¼</TITLE></HEAD>");
+			out.println("  <HEAD><TITLE>å­¦ç”Ÿç™»å½•</TITLE></HEAD>");
 			out.println("  <BODY>");
 			StudentDao studentDao = new StudentDao();
 			Student student = (Student)session.getAttribute("student");
-	    	int cid = Integer.parseInt(request.getParameter("cid"));
-	    	if (studentDao.deleteCourse(student, cid)) {
-	    		// É¾³ı³É¹¦
-	    		out.println("<h1>É¾³ı³É¹¦£¡</h1>");
-	    	} else {
-	    		// É¾³ıÊ§°Ü
-	    		out.println("<h1>É¾³ıÊ§°Ü£¬ÒÑ³ö³É¼¨¿Î³Ì²»¿ÉÒÔÉ¾³ı£¡</h1>");
-	    	}
-	    	out.println("<a href=\"" + path +  "/studentSelected.jsp\">·µ»Ø</a>");
-	    	out.println("  </BODY>");
-			out.println("</HTML>"); 
+			int cid = Integer.parseInt(request.getParameter("cid"));
+			if (studentDao.deleteCourse(student, cid)) {
+				// åˆ é™¤æˆåŠŸ
+				out.println("<h1>åˆ é™¤æˆåŠŸï¼</h1>");
+			} else {
+				// åˆ é™¤å¤±è´¥
+				out.println("<h1>åˆ é™¤å¤±è´¥ï¼Œå·²å‡ºæˆç»©è¯¾ç¨‹ä¸å¯ä»¥åˆ é™¤ï¼</h1>");
+			}
+			out.println("<a href=\"" + path +  "/studentSelected.jsp\">è¿”å›</a>");
+			out.println("  </BODY>");
+			out.println("</HTML>");
 		}
-		
+
 		else if ("lookup".equals(action)) {
 			String courseName = "";
 			if (request.getParameter("course") != null) {
@@ -104,40 +103,40 @@ public class StudentServlet extends HttpServlet {
 			}
 			request.setAttribute("courseList", list);
 			request.setAttribute("course", courseName);
-			// ÕâÀï±¾À´ÏëÓÃresponse.sendRedirect(location); À¶¶ù·¢ÏÖ²¢²»¿ÉÒÔ´«µİÖµ
-			// ÇëÇó×ª·¢¾ÍÊÇµ½ÁíÒ»¸öÒ³ÃæÈ¥´¦Àí  ËùÒÔÕâÀï¾ÍÊÇÇëÇó×ª·¢±È½ÏºÏÊÊ£¨ÎÒ²Â¡­¡­
+			// è¿™é‡Œæœ¬æ¥æƒ³ç”¨response.sendRedirect(location); è“å„¿å‘ç°å¹¶ä¸å¯ä»¥ä¼ é€’å€¼
+			// è¯·æ±‚è½¬å‘å°±æ˜¯åˆ°å¦ä¸€ä¸ªé¡µé¢å»å¤„ç†  æ‰€ä»¥è¿™é‡Œå°±æ˜¯è¯·æ±‚è½¬å‘æ¯”è¾ƒåˆé€‚ï¼ˆæˆ‘çŒœâ€¦â€¦
 			request.getRequestDispatcher("../studentSearchCourse.jsp").forward(request, response);
 		}
-		
+
 		else if ("select".equals(action)) {
 			out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
 			out.println("<HTML>");
-			out.println("  <HEAD><TITLE>Ñ§ÉúµÇÂ¼</TITLE></HEAD>");
-			out.println("  <BODY>");    	
+			out.println("  <HEAD><TITLE>å­¦ç”Ÿç™»å½•</TITLE></HEAD>");
+			out.println("  <BODY>");
 			int cid = Integer.parseInt(request.getParameter("cid"));
-	  		Student student = (Student)session.getAttribute("student");
-	  		StudentDao studentDao = new StudentDao();
-	  		if (studentDao.addCourse(student, cid)) {
-	  			// Èç¹û´ËÍ¬Ñ§Ã»ÓĞÑ¡¹ı¸ÃÃÅ¿Î Ñ¡¿Î³É¹¦
-	  			out.println("<h1>Ñ¡¿Î³É¹¦£¡</h1>");
-	  		} else {
-	  			// Ñ¡¿ÎÊ§°Ü
-	  			out.println("<h1>Ñ¡¿ÎÊ§°Ü£¬ÇëÎğÖØ¸´Ñ¡Ôñ£¡</h1>");
-	  		}
-	  		// ËÑË÷µ½ÄÄÒ³  Ñ¡¿ÎÖ®ºóÒÀÈ»»Øµ½ÄÄÒ³ 
-	  		String param = "";
-	  		if (request.getParameter("cutpage") != null) param = "&cutpage=" + request.getParameter("cutpage");
-	  		out.println("<a href=\"" + path +  "/servlet/StudentServlet?action=lookup" + param + "\">·µ»Ø</a>");
-	  		out.println("  </BODY>");
-			out.println("</HTML>"); 
+			Student student = (Student)session.getAttribute("student");
+			StudentDao studentDao = new StudentDao();
+			if (studentDao.addCourse(student, cid)) {
+				// å¦‚æœæ­¤åŒå­¦æ²¡æœ‰é€‰è¿‡è¯¥é—¨è¯¾ é€‰è¯¾æˆåŠŸ
+				out.println("<h1>é€‰è¯¾æˆåŠŸï¼</h1>");
+			} else {
+				// é€‰è¯¾å¤±è´¥
+				out.println("<h1>é€‰è¯¾å¤±è´¥ï¼Œè¯·å‹¿é‡å¤é€‰æ‹©ï¼</h1>");
+			}
+			// æœç´¢åˆ°å“ªé¡µ  é€‰è¯¾ä¹‹åä¾ç„¶å›åˆ°å“ªé¡µ
+			String param = "";
+			if (request.getParameter("cutpage") != null) param = "&cutpage=" + request.getParameter("cutpage");
+			out.println("<a href=\"" + path +  "/servlet/StudentServlet?action=lookup" + param + "\">è¿”å›</a>");
+			out.println("  </BODY>");
+			out.println("</HTML>");
 		}
 	}
 
 	/**
-		 * Initialization of the servlet. <br>
-		 *
-		 * @throws ServletException if an error occurs
-		 */
+	 * Initialization of the servlet. <br>
+	 *
+	 * @throws ServletException if an error occurs
+	 */
 	public void init() throws ServletException {
 		// Put your code here
 	}

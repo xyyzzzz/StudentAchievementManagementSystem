@@ -1,17 +1,11 @@
 package com.wenr.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.wenr.dao.StudentDao;
 import com.wenr.model.Student;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
 
@@ -69,7 +63,6 @@ public class LoginServlet extends HttpServlet {
 			String[] isUserCookies = request.getParameterValues("isUseCookie");
 			
 			if ("student".equals(identity)) {
-				// 如果登录的是学生
 				StudentDao studentDao = new StudentDao();
 				Student student = new Student();
 				try {
@@ -81,7 +74,6 @@ public class LoginServlet extends HttpServlet {
 				
 				student.setSpwd(password);
 				if (studentDao.isValid(student)) {
-					// 账号密码合法
 					session.setAttribute("student", student);
 					if (isUserCookies != null && isUserCookies.length > 0) {
 						saveCookie(inumber, password, response);
@@ -90,41 +82,23 @@ public class LoginServlet extends HttpServlet {
 					}		  		
 					response.sendRedirect(path + "/studentMain.jsp");
 				} else {
-					// 不合法
+					// 锟斤拷锟较凤拷
 					response.sendRedirect(path + "/failure.jsp");
 				}
 				
-			} else if ("admin".equals(identity)) {
-				// 如果登录的是管理员
-				if ("001".equals(inumber) && "001".equals(password)) {
-					// 账号密码合法
-					session.setAttribute("admin", "管理员");
-		  			if (isUserCookies != null && isUserCookies.length > 0) {
-						saveCookie(inumber, password, response);
-					} else {
-						notSaveCookie(inumber, password, request, response);
-					}
-		  			response.sendRedirect(path + "/adminMain.jsp");
-				} else {
-					// 不合法
-					response.sendRedirect(path + "/failure.jsp");
-				}
-			} else {
+			}  else {
 				response.sendRedirect(path + "/teacherMain.jsp");
 			}
 		} else if ("logout".equals(action)) {
-			// 退出登录
 			session.invalidate();
 			response.sendRedirect(path + "/index.jsp");
 		}
 		
 	} 
 	
-	// 记住账号密码
 	public void saveCookie(String inumber, String password, HttpServletResponse response) {
 		Cookie inumberCookie = new Cookie("inumber", inumber);
 		Cookie passwordCookie = new Cookie("password", password);
-		// 设置Cookie存储路径  否则index中取不到……
 		inumberCookie.setPath("/");
 		passwordCookie.setPath("/");
 		inumberCookie.setMaxAge(864000);	// 10 days
@@ -133,8 +107,7 @@ public class LoginServlet extends HttpServlet {
 		response.addCookie(passwordCookie);
 	}
 	
-	// 不记住账号密码
-	public void notSaveCookie(String inumber, String password, 
+	public void notSaveCookie(String inumber, String password,
 			HttpServletRequest request, HttpServletResponse response) {
 		Cookie[] cookies  = request.getCookies();
 		for (Cookie cookie: cookies) {

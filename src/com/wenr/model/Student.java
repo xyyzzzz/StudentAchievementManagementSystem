@@ -1,9 +1,9 @@
 package com.wenr.model;
 
 public class Student {
-	private int sid;		// Ñ§ºÅ
-	private String spwd;	// ÃÜÂë
-	private String sname;	// ĞÕÃû
+	private int sid;
+	private String spwd;
+	private String sname;
 	
 	public int getSid() {
 		return sid;

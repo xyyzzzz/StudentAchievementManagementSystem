@@ -1,14 +1,14 @@
 package com.wenr.dao;
 
+import com.wenr.model.Course;
+import com.wenr.model.Student;
+import com.wenr.util.DBUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.wenr.model.Course;
-import com.wenr.model.Student;
-import com.wenr.util.DBUtil;
 
 public class StudentDao {
 	
@@ -151,10 +151,8 @@ public class StudentDao {
 			pstmt.setInt(2, cid);
 			rs = pstmt.executeQuery();
 			if (rs != null && rs.next()) {
-				// 存在成绩 不可以删除
 				return false;
 			} else {
-				// 成绩不存在，可以删除
 				if (pstmt != null) pstmt.close();
 				sql = "delete from optcou where sid=? and cid=?";
 				pstmt = conn.prepareStatement(sql);
@@ -200,10 +198,8 @@ public class StudentDao {
 			pstmt.setInt(2, cid);
 			rs = pstmt.executeQuery();
 			if (rs != null && rs.next()) {
-				// 该同学已经选过该门课 不能重复选择
 				return false;
 			} else {
-				// 没选过 可以选择
 				sql = "insert into optcou(sid, cid) values(?, ?)";
 				if (pstmt != null) pstmt.close();
 				pstmt = conn.prepareStatement(sql);

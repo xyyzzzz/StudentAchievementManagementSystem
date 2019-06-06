@@ -1,16 +1,10 @@
 package com.wenr.controller;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class LoginFilter implements Filter {
 
@@ -34,14 +28,12 @@ public class LoginFilter implements Filter {
 		String subUrl = url.substring(index);
 		
 		if (subUrl.indexOf("admin") != -1) {
-			// url里面有admin 证明是管理员才能查看的页面  只有在session里面找到admin才可以查看
 			if (session.getAttribute("admin") != null) {
 				arg2.doFilter(arg0, arg1);
 			} else {
 				response.sendRedirect("index.jsp");
 			}
 		} else if (subUrl.indexOf("student") != -1) {
-			// url里面有student 证明是学生登录才能查看的页面
 			if (session.getAttribute("student") != null) {
 				arg2.doFilter(arg0, arg1);
 			} else {

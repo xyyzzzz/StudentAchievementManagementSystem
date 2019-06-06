@@ -1,13 +1,13 @@
 package com.wenr.dao;
 
+import com.wenr.model.Course;
+import com.wenr.util.DBUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.wenr.model.Course;
-import com.wenr.util.DBUtil;
 
 public class CourseDao {
 	
@@ -52,7 +52,6 @@ public class CourseDao {
 		return list;
 	}
 	
-	// 通过课程名查询    模糊查询
 	public ArrayList<Course> getCourseByName(String cname) {
 		
 		ArrayList<Course> list = new ArrayList<>();

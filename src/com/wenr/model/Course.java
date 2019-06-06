@@ -1,10 +1,10 @@
 package com.wenr.model;
 
 public class Course {
-	private int cid;		// 课程号
-	private String cname;	// 课程名
-	private int credit;		// 学分
-	private double score;	// 成绩
+	private int cid;
+	private String cname;
+	private int credit;
+	private double score;
 	
 	public int getCid() {
 		return cid;
