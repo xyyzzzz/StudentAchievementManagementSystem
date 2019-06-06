@@ -82,7 +82,6 @@ public class LoginServlet extends HttpServlet {
 					}		  		
 					response.sendRedirect(path + "/studentMain.jsp");
 				} else {
-					// ���Ϸ�
 					response.sendRedirect(path + "/failure.jsp");
 				}
 				

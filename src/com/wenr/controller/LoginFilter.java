@@ -22,18 +22,15 @@ public class LoginFilter implements Filter {
 		HttpSession session = request.getSession();
 		
 		request.setCharacterEncoding("utf-8");
-		final String projectName = "StudentAchievementManagementSystem"; 
 		String url = request.getRequestURL().toString();
-		int index = url.indexOf(projectName) + projectName.length();
-		String subUrl = url.substring(index);
-		
-		if (subUrl.indexOf("admin") != -1) {
+
+		if (url.indexOf("admin") != -1) {
 			if (session.getAttribute("admin") != null) {
 				arg2.doFilter(arg0, arg1);
 			} else {
 				response.sendRedirect("index.jsp");
 			}
-		} else if (subUrl.indexOf("student") != -1) {
+		} else if (url.indexOf("student") != -1) {
 			if (session.getAttribute("student") != null) {
 				arg2.doFilter(arg0, arg1);
 			} else {
